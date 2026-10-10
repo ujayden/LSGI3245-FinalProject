@@ -1,26 +1,26 @@
-facility_name,latitude,longitude,northing,easting,facility_type,district,address,facility_details,opening_hours,premises_based,site_area_sq_m,status_of_facilities
-North District Sports Ground,22.50626772,114.1306093,840737.7,831507.7,"BASKETBALL COURTS,GRASS PITCHES,SPORTS GROUNDS,TENNIS COURTS,VOLLEYBALL COURTS,CHILDREN’S PLAY AREA",NORTH,"26 Tin Ping Road, Sheung Shui","11-a-side natural grass soccer pitch, Tennis Practice Courts",N.A.,Y,43000,Existing 
-Hammer Hill Road Sports Ground,22.33828921,114.2073455,822136.0,839407.0,"SPORTS GROUNDS, GRASS PITCHES",WONG TAI SIN,"158 Hammer Hill Road, Wong Tai Sin",7-a-side soccer pitch,N.A.,Y,26000,Existing 
-Kowloon Bay Sports Ground,22.32699147,114.2098221,820885.0,839662.4,"SPORTS GROUNDS, GRASS PITCHES",KWUN TONG,"1 Kai Lok Street, Kowloon Bay",11-a-side soccer pitch,N.A.,Y,33320,Existing 
-Wo Yi Hop Road Sports Ground,22.37408156,114.1369275,826099.7,832153.9,"SPORTS GROUNDS, GRASS PITCHES",KWAI TSING,"298 Wo Yi Hop Road, Kwai Chung",11-a-side Natural Turf Soccer Pitch,N.A.,Y,16100,Existing 
-Kwai Chung Sports Ground,22.35836784,114.1252854,824360.0,830954.3,"SPORTS GROUNDS, GRASS PITCHES, HARD-SURFACE PITCHES, BASKETBALL COURTS, GATEBALL COURTS",KWAI TSING,"93 Hing Shing Road, Kwai Chung","11-a-side of Natural Turf Pitch, 7-a-side Hard-surfaced Soccer Pitches",N.A.,Y,43500,Existing 
-Sha Tin Sports Ground,22.3876436,114.1974368,827601.1,838385.5,"SPORTS GROUNDS, GRASS PITCHES",SHA TIN,"18 Yuen Wo Road, Sha Tin",11-a-side soccer pitch,N.A.,Y,29400,Existing 
-Ma On Shan Sports Ground,22.42089514,114.2283339,831284.0,841566.0,"SPORTS GROUNDS, GRASS PITCHES",SHA TIN,"1 Hang Hong Street, Ma On Shan, Sha Tin",11-a-side natural turf soccer pitch,N.A.,Y,41200,Existing 
-Tseung Kwan O Sports Ground,22.31213346,114.2635616,819241.9,845199.8,SPORTS GROUNDS,SAI KUNG,"109 Po Hong Road, Tseung Kwan O",N.A.,N.A.,Y,61738,Existing 
-Yuen Long Stadium,22.44241844,114.0212686,833674.8,820250.1,"SPORTS GROUNDS, GRASS PITCHES",YUEN LONG,"6 Tai Yuk Road, Yuen Long","11-a-side turf soccer pitch, eight-lane 400-metre all-weather synthetic running track",,Y,23516,Existing 
-Tin Shui Wai Sports Ground,22.45461286,114.0049808,835027.0,818575.0,"SPORTS GROUNDS, GRASS PITCHES",YUEN LONG,"2 Tin Shui Road, Tin Shui Wai, Yuen Long.",11-a-side turf soccer pitch,N.A.,Y,32200,Existing 
-Cheung Chau Sports Ground,22.20658337,114.0329765,807558.4,821430.4,"SPORTS GROUNDS, HARD-SURFACE PITCHES, BASKETBALL COURTS",ISLANDS,"Fa Ping Road, Cheung Chau",7-a-side soccer pitch,N.A.,Y,12200,Existing 
-Perth Street Sports Ground,22.32059208,114.1810771,820176.0,836701.0,"SPORTS GROUNDS, HARD-SURFACE PITCHES, BASKETBALL COURTS, VOLLEYBALL COURTS",KOWLOON CITY,"Shek Ku Street, Ho Man Tin",7-a-side soccer pitch,N.A.,Y,21700,Existing 
-Wan Chai Sports Ground,22.28139023,114.1778059,815835.0,836364.0,SPORTS GROUNDS,WAN CHAI,"20 Tonnochy Road, Wan Chai",N.A.,N.A.,Y,27000,Existing 
-Kowloon Tsai Sports Ground,22.33061592,114.1841544,821286.0,837018.0,"SPORTS GROUNDS, GRASS PITCHES",KOWLOON CITY,"Inverness Road, Kowloon City",11-a-side natural turf soccer pitch,N.A.,Y,21300,Existing 
-Tsing Yi Sports Ground,22.35619324,114.1081381,824119.9,829188.0,"SPORTS GROUNDS, GRASS PITCHES",KWAI TSING,"Tsing King Road, Tsing Yi",11-a-side of Natural Turf Pitch,N.A.,Y,24900,Existing 
-Sai Kung Tang Shiu Kin Sports Ground,22.38370864,114.2733076,827168.4,846198.9,"SPORTS GROUNDS, GRASS PITCHES",SAI KUNG,"Fuk Man Road, Sai Kung",N.A.,N.A.,Y,23132,Existing 
-Tuen Mun Tang Shiu Kin Sports Ground,22.40396075,113.9742675,829421.9,815406.1,"SPORTS GROUNDS, GRASS PITCHES",TUEN MUN,"Tsing Chung Koon Road, Tuen Mun",11-a-side turf soccer pitch,N.A.,Y,23400,Existing 
-Siu Lun Sports Ground,22.38495445,113.9780102,827316.7,815788.7,"SPORTS GROUNDS, GRASS PITCHES",TUEN MUN,"Siu Lun Street, Tuen Mun",11-a-side turf soccer pitch,N.A.,Y,12000,Existing 
-Shing Mun Valley Sports Ground,22.37681627,114.1280062,826402.8,831235.2,"SPORTS GROUNDS, GRASS PITCHES",TSUEN WAN,"Shing Mun Road, Tsuen Wan",11-a-side turf soccer pitch,N.A.,Y,34300,Existing 
-Tai Po Sports Ground,22.45536115,114.1625442,835099.8,834793.0,"SPORTS GROUNDS, GRASS PITCHES",TAI PO,"21 Tai Po Tau Road, Tai Po",11-a-side turf soccer pitch,N.A.,Y,35790,Existing 
-Aberdeen Sports Ground,22.24941261,114.1719074,812294.0,835756.0,"SPORTS GROUNDS, GRASS PITCHES",SOUTHERN,"108 Wong Chuk Hang Road, Aberdeen",11-a-side turf soccer pitch,N.A.,Y,41800,Existing 
-Siu Sai Wan Sports Ground,22.26753028,114.2488661,814302.0,843688.0,"SPORTS GROUNDS, GRASS PITCHES",EASTERN,"8 Fu Hong Street, Siu Sai Wan",11-a-side soccer pitch,N.A.,Y,43000,Existing 
-Sham Shui Po Sports Ground,22.3370648,114.1524948,822000.3,833756.5,"SPORTS GROUNDS, GRASS PITCHES, BASKETBALL COURTS, NETBALL COURTS",SHAM SHUI PO,"3 Hing Wah Street, Cheung Sha Wan","11-a-side soccer pitch, 7-a-side soccer pitch",N.A.,Y,44000,Existing 
-Fanling Recreation Ground,22.49347624,114.137662,839321.0,832233.0,"SPORTS GROUNDS, GRASS PITCHES, BASKETBALL COURTS, VOLLEYBALL COURTS",NORTH,"San Wan Road, Fanling",11-a-side natural grass soccer pitch,N.A.,Y,20860,Existing 
-Causeway Bay Sports Ground,22.28048659,114.1906336,815735.0,837686.0,"SPORTS GROUNDS, GRASS PITCHES, TENNIS COURTS",WAN CHAI,"Causeway Road, Causeway Bay",N.A.,N.A.,Y,24400,Existing 
+facility_name,latitude,longitude,northing,easting,facility_type,district,address
+North District Sports Ground,22.50626772,114.1306093,840737.7,831507.7,"BASKETBALL COURTS,GRASS PITCHES,SPORTS GROUNDS,TENNIS COURTS,VOLLEYBALL COURTS,CHILDREN’S PLAY AREA",NORTH,"26 Tin Ping Road, Sheung Shui"
+Hammer Hill Road Sports Ground,22.33828921,114.2073455,822136.0,839407.0,"SPORTS GROUNDS, GRASS PITCHES",WONG TAI SIN,"158 Hammer Hill Road, Wong Tai Sin"
+Kowloon Bay Sports Ground,22.32699147,114.2098221,820885.0,839662.4,"SPORTS GROUNDS, GRASS PITCHES",KWUN TONG,"1 Kai Lok Street, Kowloon Bay"
+Wo Yi Hop Road Sports Ground,22.37408156,114.1369275,826099.7,832153.9,"SPORTS GROUNDS, GRASS PITCHES",KWAI TSING,"298 Wo Yi Hop Road, Kwai Chung"
+Kwai Chung Sports Ground,22.35836784,114.1252854,824360.0,830954.3,"SPORTS GROUNDS, GRASS PITCHES, HARD-SURFACE PITCHES, BASKETBALL COURTS, GATEBALL COURTS",KWAI TSING,"93 Hing Shing Road, Kwai Chung"
+Sha Tin Sports Ground,22.3876436,114.1974368,827601.1,838385.5,"SPORTS GROUNDS, GRASS PITCHES",SHA TIN,"18 Yuen Wo Road, Sha Tin"
+Ma On Shan Sports Ground,22.42089514,114.2283339,831284.0,841566.0,"SPORTS GROUNDS, GRASS PITCHES",SHA TIN,"1 Hang Hong Street, Ma On Shan, Sha Tin"
+Tseung Kwan O Sports Ground,22.31213346,114.2635616,819241.9,845199.8,SPORTS GROUNDS,SAI KUNG,"109 Po Hong Road, Tseung Kwan O"
+Yuen Long Stadium,22.44241844,114.0212686,833674.8,820250.1,"SPORTS GROUNDS, GRASS PITCHES",YUEN LONG,"6 Tai Yuk Road, Yuen Long"
+Tin Shui Wai Sports Ground,22.45461286,114.0049808,835027.0,818575.0,"SPORTS GROUNDS, GRASS PITCHES",YUEN LONG,"2 Tin Shui Road, Tin Shui Wai, Yuen Long."
+Cheung Chau Sports Ground,22.20658337,114.0329765,807558.4,821430.4,"SPORTS GROUNDS, HARD-SURFACE PITCHES, BASKETBALL COURTS",ISLANDS,"Fa Ping Road, Cheung Chau"
+Perth Street Sports Ground,22.32059208,114.1810771,820176.0,836701.0,"SPORTS GROUNDS, HARD-SURFACE PITCHES, BASKETBALL COURTS, VOLLEYBALL COURTS",KOWLOON CITY,"Shek Ku Street, Ho Man Tin"
+Wan Chai Sports Ground,22.28139023,114.1778059,815835.0,836364.0,SPORTS GROUNDS,WAN CHAI,"20 Tonnochy Road, Wan Chai"
+Kowloon Tsai Sports Ground,22.33061592,114.1841544,821286.0,837018.0,"SPORTS GROUNDS, GRASS PITCHES",KOWLOON CITY,"Inverness Road, Kowloon City"
+Tsing Yi Sports Ground,22.35619324,114.1081381,824119.9,829188.0,"SPORTS GROUNDS, GRASS PITCHES",KWAI TSING,"Tsing King Road, Tsing Yi"
+Sai Kung Tang Shiu Kin Sports Ground,22.38370864,114.2733076,827168.4,846198.9,"SPORTS GROUNDS, GRASS PITCHES",SAI KUNG,"Fuk Man Road, Sai Kung"
+Tuen Mun Tang Shiu Kin Sports Ground,22.40396075,113.9742675,829421.9,815406.1,"SPORTS GROUNDS, GRASS PITCHES",TUEN MUN,"Tsing Chung Koon Road, Tuen Mun"
+Siu Lun Sports Ground,22.38495445,113.9780102,827316.7,815788.7,"SPORTS GROUNDS, GRASS PITCHES",TUEN MUN,"Siu Lun Street, Tuen Mun"
+Shing Mun Valley Sports Ground,22.37681627,114.1280062,826402.8,831235.2,"SPORTS GROUNDS, GRASS PITCHES",TSUEN WAN,"Shing Mun Road, Tsuen Wan"
+Tai Po Sports Ground,22.45536115,114.1625442,835099.8,834793.0,"SPORTS GROUNDS, GRASS PITCHES",TAI PO,"21 Tai Po Tau Road, Tai Po"
+Aberdeen Sports Ground,22.24941261,114.1719074,812294.0,835756.0,"SPORTS GROUNDS, GRASS PITCHES",SOUTHERN,"108 Wong Chuk Hang Road, Aberdeen"
+Siu Sai Wan Sports Ground,22.26753028,114.2488661,814302.0,843688.0,"SPORTS GROUNDS, GRASS PITCHES",EASTERN,"8 Fu Hong Street, Siu Sai Wan"
+Sham Shui Po Sports Ground,22.3370648,114.1524948,822000.3,833756.5,"SPORTS GROUNDS, GRASS PITCHES, BASKETBALL COURTS, NETBALL COURTS",SHAM SHUI PO,"3 Hing Wah Street, Cheung Sha Wan"
+Fanling Recreation Ground,22.49347624,114.137662,839321.0,832233.0,"SPORTS GROUNDS, GRASS PITCHES, BASKETBALL COURTS, VOLLEYBALL COURTS",NORTH,"San Wan Road, Fanling"
+Causeway Bay Sports Ground,22.28048659,114.1906336,815735.0,837686.0,"SPORTS GROUNDS, GRASS PITCHES, TENNIS COURTS",WAN CHAI,"Causeway Road, Causeway Bay"

@@ -1,47 +1,47 @@
-facility_name,latitude,longitude,northing,easting,facility_type,district,address,facility_details,opening_hours
-Tuen Mun Swimming Pool,22.38307272,113.96314806,827110.45518397,814257.87412829,SWIMMING POOLS,TUEN MUN,"50 Lung Mun Road, Tuen Mun, N.T.","Indoor Facilities :<br/>^Main pool (Length 50m x Width 25m, Depth: 1.4m-1.9m)<br/>^Training pool Length 25m x Width 15m, Depth: 1.2m-1.4m) <br/>Spectator stand (1200 seats), Electronic Scoreboard, Family changing rooms, Babycare room <br/><br/>Outdoor Facilities :<br/>Training pool 2(Length 25m x Width 30m, Depth: 1.1m-1.4m)<br/>Teaching pool (Length 25m x Width 12.5m, Depth: 0.7m-0.9m) <br/>Leisure pool (Irregular shape, Depth: 0.1 m-0.3m)<br/>Diving pool (Length 11.75m x Width 11m, Depth: 4.4m-4.6m)<br/><br/>Barrier Free Facilities: Pool Lift (Indoor Main Pool, Indoor Training Pool), Ramp (Outdoor Training Pool), Accessible/Universal Changing Rooms and Toilets, Accessible Lift, Tactile Guide Path, Visual Fire Alarm System, Braille and tactile Floor Plan",Winter Opening Schedule Information<br/>1st Session: 6:30 am - 12:00 nn<br/><br/>2nd Session: 1:00 - 6:00 pm<br/><br/>3rd Session: 7:00 - 9:30 pm<br/><br/>(Session breaks: 12:00 nn - 1:00 pm & 6:00 - 7:00 pm)
-Morrison Hill Swimming Pool,22.27636492,114.17839405,815278.5591248,836424.62251248,SWIMMING POOLS,WAN CHAI,"7 Oi Kwan Road, Wan Chai",,N.A.
-Tin Sau Road Swimming Pool,22.46710912,114.00266412,836411.10675412,818338.14944228,SWIMMING POOLS,YUEN LONG,"20 Tin Sau Road, Tin Shui Wai, Yuen Long, N.T.",,
-Tung Cheong Street Swimming Pool,22.44978638,114.1701758,834482.44762759,835578.49108334,SWIMMING POOLS,TAI PO,"1/F, Tai Po Tung Cheong Street Leisure Building, 25 Tung Chung Street, Tai Po",N.A.,N.A.
-Victoria Park Swimming Pool,22.28333576,114.19047571,816050.5,837669.7000000001,SWIMMING POOLS,WAN CHAI,"1 Hing Fat Street, Causeway Bay",N.A.,
-Tung Chung Swimming Pool,22.2893242,113.93811062,816735.1,811716.3,SWIMMING POOLS,ISLANDS,"5 Tat Tung Road, Tung Chung, NT",,
-Tuen Mun North West Swimming Pool,22.40823234,113.96593219,829896.1,814548.5,SWIMMING POOLS,TUEN MUN,"95 Ming Kum Road, Tuen Mun",,
-Tsing Yi Southwest Swimming Pool,22.35155878,114.10206789,823607.0,828562.5,SWIMMING POOLS,KWAI TSING,"70 Chung Mei Road, Tsing Yi, New Territories",,
-Siu Sai Wan Swimming Pool,22.26357455,114.24955287,813858.1,843771.1,SWIMMING POOLS,EASTERN,"1/F, Siu Sai Wan Complex, 15 Siu Sai Wan Road, Hong Kong",,
-Lam Tin Swimming Pool,22.31010533,114.23739676,819022.6,842491.9,SWIMMING POOLS,KWUN TONG,"1/F Lam Tin Complex, 1 Hing Tin Street, Lam Tin",,
-Kwun Tong Swimming Pool,22.31079517,114.22994334,819092.1,841736.0,SWIMMING POOLS,KWUN TONG,"2 Tsui Ping Road,Kwun Tong,Kowloon",,
-Tseung Kwan O Swimming Pool,22.31795552,114.26005267,819886.4,844837.9,SWIMMING POOLS,SAI KUNG,"9 Wan Lung Road, Tseung Kwan O",,N.A.
-Sai Kung Swimming pool,22.38346624,114.27545149,827141.7000000001,846419.7000000001,SWIMMING POOLS,SAI KUNG,"Wan Man Road, Sai Kung",,
-Sha Tin Jockey Club Swimming Pool,22.38410766,114.19389874,827209.5,838021.2000000001,SWIMMING POOLS,SHA TIN,"10 Yuen Wo Road, Sha Tin",,N.A.
-Ma On Shan Swimming Pool,22.42720069,114.22964948,831982.3,841701.2000000001,SWIMMING POOLS,SHA TIN,"33 On Chun Street, Ma On Shan",,N.A.
-Hin Tin Swimming Pool,22.36726478,114.17326835,825344.3,835896.6,SWIMMING POOLS,SHA TIN,"68 Che Kung Miu Road, Tai Wai",,N.A.
-Tai Po Swimming Pool,22.45559058,114.16325435,835125.2000000001,834866.1,SWIMMING POOLS,TAI PO,"11 Ting Tai Road, Tai Po",,N.A.
-Sheung Shui Swimming Pool,22.50619027,114.13134014,840729.1,831582.9,SWIMMING POOLS,NORTH,"38 Tin Ping Road, Sheung Shui",,N.A.
-Fanling Swimming Pool,22.49490626,114.1360931,839479.4,832071.6,SWIMMING POOLS,NORTH,"73 San Wan Road, Fanling",,N.A.
-Tsing Yi Swimming Pool,22.35755407,114.1079617,824270.6,829169.9,SWIMMING POOLS,KWAI TSING,"Tsing King Road, Tsing Yi",,
-North Kwai Chung Jockey Club Swimming Pool,22.37265109,114.13678224,825941.3,832138.9,SWIMMING POOLS,KWAI TSING,"290 Wo Yi Hop Road, Kwai Chung",,
-Kwai Shing Swimming Pool,22.35930271,114.12313752,824463.6,830733.1,SWIMMING POOLS,KWAI TSING,"306 Kwai Shing Circuit, Kwai Chung",N.A.,N.A.
-Tsuen King Circuit Wu Chung Swimming Pool,22.37797589,114.10420456,826532.2000000001,828784.0,SWIMMING POOLS,TSUEN WAN,"178 Tsuen King Circuit, Tsuen Wan",,N.A.
-Shing Mun Valley Swimming Pool,22.37317736,114.12351962,826000.0,830773.0,SWIMMING POOLS,TSUEN WAN,"21 Shing Mun Road, Tsuen Wan",,N.A.
-Ping Shan Tin Shui Wai Swimming Pool,22.44737013,114.00467401,834225.0,818542.5,SWIMMING POOLS,YUEN LONG,"1, Tsui Sing Road, Tin Shui Wai, Yuen Long",N.A.,N.A.
-Yuen Long Swimming Pool,22.44134664,114.02138633,833556.1,820262.1,SWIMMING POOLS,YUEN LONG,"10 Tai Yuk Road, Yuen Long",,N.A.
-Tin Shui Wai Swimming Pool,22.45617355,114.00691421,835199.6,818774.2000000001,SWIMMING POOLS,YUEN LONG,"1 Tin Pak Road, Tin Shui Wai",,N.A.
-The Jockey Club Yan Oi Tong Swimming Pool,22.4021932,113.974035,829226.2000000001,815381.9,SWIMMING POOLS,TUEN MUN,"Tsing Chung Koon Road, Tuen Mun",,
-Mui Wo Swimming Pool,22.26640705,113.99596529,814180.3,817624.2000000001,SWIMMING POOLS,ISLANDS,"5 Ngan Shek Street, Mui Wo, Lantau",,N.A.
-Jordan Valley Swimming Pool,22.32359402,114.21828126,820536.1,840539.0,SWIMMING POOLS,KWUN TONG,"6 Choi Ha Road, Ngau Tau Kok",N.A.,N.A.
-Hammer Hill Road Swimming Pool,22.33756151,114.20645519,822055.4,839315.3,SWIMMING POOLS,WONG TAI SIN,"30 Lung Cheung Road, Wong Tai Sin",,N.A.
-Morse Park Swimming Pool,22.34089591,114.19056091,822424.4,837677.9,SWIMMING POOLS,WONG TAI SIN,"80 Fung Mo Street, Wong Tai Sin",,N.A.
-Kowloon Tsai Swimming Pool,22.33312911,114.18461757,821564.3,837065.7000000001,SWIMMING POOLS,KOWLOON CITY,"13 Inverness Road, Kowloon City",,N.A.
-Ho Man Tin Swimming Pool,22.31226858,114.18103704,819254.3,836696.9,SWIMMING POOLS,KOWLOON CITY,"1 Chung Yee Street, Ho Man Tin",,N.A.
-Tai Wan Shan Swimming Pool,22.30510662,114.19230722,818461.3,837858.2000000001,SWIMMING POOLS,KOWLOON CITY,7 Wan Hoi Street，　Hung Hom,,N.A.
-Tai Kok Tsui Swimming Pool,22.32203372,114.16287227,820335.7000000001,834825.4,SWIMMING POOLS,YAU TSIM MONG,"4/F Tai Kok Tsui Municipal Services Building, 63 Fuk Tsun Street,Tai Kok Tsui",,N.A.
-Kowloon Park Swimming Pool,22.30187157,114.17038187,818048.7000000001,835600.2000000001,SWIMMING POOLS,YAU TSIM MONG,"22 Austin Road, Tsim Sha Tsui",,
-Sham Shui Po Park Swimming Pool,22.33113839,114.15499722,821344.0,834014.2000000001,SWIMMING POOLS,SHAM SHUI PO,"733 Lai Chi Kok Road, Sham Shui Po",,N.A.
-Lei Cheng Uk Swimming Pool,22.33882331,114.16212313,822194.9,834748.4,SWIMMING POOLS,SHAM SHUI PO,"25 Kwong Lee Road, Sham Shui Po",,N.A.
-Lai Chi Kok Park Swimming Pool,22.34032545,114.1372749,822361.7000000001,832188.7000000001,SWIMMING POOLS,SHAM SHUI PO,"1 Lai Wan Road, Lai Chi Kok",,N.A.
-Island East Swimming Pool,22.2847541,114.2222929,816208.2000000001,840948.6,SWIMMING POOLS,EASTERN,"52 Lei King Road, Sai Wan Ho",N.A.,N.A.
-Chai Wan Swimming Pool,22.26450345,114.24625267,813966.7000000001,843418.8,SWIMMING POOLS,EASTERN,"345 San Ha Street, Chai Wan",,N.A.
-Wan Chai Swimming Pool,22.28121414,114.17688502,815815.5,836269.1,SWIMMING POOLS,WAN CHAI,"27 Harbour Road, Wan Chai",N.A.,N.A.
-Sun Yat Sen Memorial Park Swimming Pool,22.28998144,114.14435355,816786.7000000001,832916.7000000001,SWIMMING POOLS,CENTRAL AND WESTERN,"16 Eastern Street North, Sai Ying Pun, Hong Kong.",N.A.,N.A.
-Kennedy Town Swimming Pool,22.28575468,114.13131283,816319.0,831572.7000000001,SWIMMING POOLS,CENTRAL AND WESTERN,"2 Sai Cheung Street North, Kennedy Town",N.A.,N.A.
-Pao Yue Kong Swimming Pool,22.24575485,114.16525073,811889.0,835069.8,SWIMMING POOLS,SOUTHERN,"2 Shum Wan Road, Wong Chuk Hang",,N.A.
+facility_name,latitude,longitude,northing,easting,facility_type,district,address
+Tuen Mun Swimming Pool,22.38307272,113.96314806,827110.45518397,814257.87412829,SWIMMING POOLS,TUEN MUN,"50 Lung Mun Road, Tuen Mun, N.T."
+Morrison Hill Swimming Pool,22.27636492,114.17839405,815278.5591248,836424.62251248,SWIMMING POOLS,WAN CHAI,"7 Oi Kwan Road, Wan Chai"
+Tin Sau Road Swimming Pool,22.46710912,114.00266412,836411.10675412,818338.14944228,SWIMMING POOLS,YUEN LONG,"20 Tin Sau Road, Tin Shui Wai, Yuen Long, N.T."
+Tung Cheong Street Swimming Pool,22.44978638,114.1701758,834482.44762759,835578.49108334,SWIMMING POOLS,TAI PO,"1/F, Tai Po Tung Cheong Street Leisure Building, 25 Tung Chung Street, Tai Po"
+Victoria Park Swimming Pool,22.28333576,114.19047571,816050.5,837669.7000000001,SWIMMING POOLS,WAN CHAI,"1 Hing Fat Street, Causeway Bay"
+Tung Chung Swimming Pool,22.2893242,113.93811062,816735.1,811716.3,SWIMMING POOLS,ISLANDS,"5 Tat Tung Road, Tung Chung, NT"
+Tuen Mun North West Swimming Pool,22.40823234,113.96593219,829896.1,814548.5,SWIMMING POOLS,TUEN MUN,"95 Ming Kum Road, Tuen Mun"
+Tsing Yi Southwest Swimming Pool,22.35155878,114.10206789,823607.0,828562.5,SWIMMING POOLS,KWAI TSING,"70 Chung Mei Road, Tsing Yi, New Territories"
+Siu Sai Wan Swimming Pool,22.26357455,114.24955287,813858.1,843771.1,SWIMMING POOLS,EASTERN,"1/F, Siu Sai Wan Complex, 15 Siu Sai Wan Road, Hong Kong"
+Lam Tin Swimming Pool,22.31010533,114.23739676,819022.6,842491.9,SWIMMING POOLS,KWUN TONG,"1/F Lam Tin Complex, 1 Hing Tin Street, Lam Tin"
+Kwun Tong Swimming Pool,22.31079517,114.22994334,819092.1,841736.0,SWIMMING POOLS,KWUN TONG,"2 Tsui Ping Road,Kwun Tong,Kowloon"
+Tseung Kwan O Swimming Pool,22.31795552,114.26005267,819886.4,844837.9,SWIMMING POOLS,SAI KUNG,"9 Wan Lung Road, Tseung Kwan O"
+Sai Kung Swimming pool,22.38346624,114.27545149,827141.7000000001,846419.7000000001,SWIMMING POOLS,SAI KUNG,"Wan Man Road, Sai Kung"
+Sha Tin Jockey Club Swimming Pool,22.38410766,114.19389874,827209.5,838021.2000000001,SWIMMING POOLS,SHA TIN,"10 Yuen Wo Road, Sha Tin"
+Ma On Shan Swimming Pool,22.42720069,114.22964948,831982.3,841701.2000000001,SWIMMING POOLS,SHA TIN,"33 On Chun Street, Ma On Shan"
+Hin Tin Swimming Pool,22.36726478,114.17326835,825344.3,835896.6,SWIMMING POOLS,SHA TIN,"68 Che Kung Miu Road, Tai Wai"
+Tai Po Swimming Pool,22.45559058,114.16325435,835125.2000000001,834866.1,SWIMMING POOLS,TAI PO,"11 Ting Tai Road, Tai Po"
+Sheung Shui Swimming Pool,22.50619027,114.13134014,840729.1,831582.9,SWIMMING POOLS,NORTH,"38 Tin Ping Road, Sheung Shui"
+Fanling Swimming Pool,22.49490626,114.1360931,839479.4,832071.6,SWIMMING POOLS,NORTH,"73 San Wan Road, Fanling"
+Tsing Yi Swimming Pool,22.35755407,114.1079617,824270.6,829169.9,SWIMMING POOLS,KWAI TSING,"Tsing King Road, Tsing Yi"
+North Kwai Chung Jockey Club Swimming Pool,22.37265109,114.13678224,825941.3,832138.9,SWIMMING POOLS,KWAI TSING,"290 Wo Yi Hop Road, Kwai Chung"
+Kwai Shing Swimming Pool,22.35930271,114.12313752,824463.6,830733.1,SWIMMING POOLS,KWAI TSING,"306 Kwai Shing Circuit, Kwai Chung"
+Tsuen King Circuit Wu Chung Swimming Pool,22.37797589,114.10420456,826532.2000000001,828784.0,SWIMMING POOLS,TSUEN WAN,"178 Tsuen King Circuit, Tsuen Wan"
+Shing Mun Valley Swimming Pool,22.37317736,114.12351962,826000.0,830773.0,SWIMMING POOLS,TSUEN WAN,"21 Shing Mun Road, Tsuen Wan"
+Ping Shan Tin Shui Wai Swimming Pool,22.44737013,114.00467401,834225.0,818542.5,SWIMMING POOLS,YUEN LONG,"1, Tsui Sing Road, Tin Shui Wai, Yuen Long"
+Yuen Long Swimming Pool,22.44134664,114.02138633,833556.1,820262.1,SWIMMING POOLS,YUEN LONG,"10 Tai Yuk Road, Yuen Long"
+Tin Shui Wai Swimming Pool,22.45617355,114.00691421,835199.6,818774.2000000001,SWIMMING POOLS,YUEN LONG,"1 Tin Pak Road, Tin Shui Wai"
+The Jockey Club Yan Oi Tong Swimming Pool,22.4021932,113.974035,829226.2000000001,815381.9,SWIMMING POOLS,TUEN MUN,"Tsing Chung Koon Road, Tuen Mun"
+Mui Wo Swimming Pool,22.26640705,113.99596529,814180.3,817624.2000000001,SWIMMING POOLS,ISLANDS,"5 Ngan Shek Street, Mui Wo, Lantau"
+Jordan Valley Swimming Pool,22.32359402,114.21828126,820536.1,840539.0,SWIMMING POOLS,KWUN TONG,"6 Choi Ha Road, Ngau Tau Kok"
+Hammer Hill Road Swimming Pool,22.33756151,114.20645519,822055.4,839315.3,SWIMMING POOLS,WONG TAI SIN,"30 Lung Cheung Road, Wong Tai Sin"
+Morse Park Swimming Pool,22.34089591,114.19056091,822424.4,837677.9,SWIMMING POOLS,WONG TAI SIN,"80 Fung Mo Street, Wong Tai Sin"
+Kowloon Tsai Swimming Pool,22.33312911,114.18461757,821564.3,837065.7000000001,SWIMMING POOLS,KOWLOON CITY,"13 Inverness Road, Kowloon City"
+Ho Man Tin Swimming Pool,22.31226858,114.18103704,819254.3,836696.9,SWIMMING POOLS,KOWLOON CITY,"1 Chung Yee Street, Ho Man Tin"
+Tai Wan Shan Swimming Pool,22.30510662,114.19230722,818461.3,837858.2000000001,SWIMMING POOLS,KOWLOON CITY,7 Wan Hoi Street，　Hung Hom
+Tai Kok Tsui Swimming Pool,22.32203372,114.16287227,820335.7000000001,834825.4,SWIMMING POOLS,YAU TSIM MONG,"4/F Tai Kok Tsui Municipal Services Building, 63 Fuk Tsun Street,Tai Kok Tsui"
+Kowloon Park Swimming Pool,22.30187157,114.17038187,818048.7000000001,835600.2000000001,SWIMMING POOLS,YAU TSIM MONG,"22 Austin Road, Tsim Sha Tsui"
+Sham Shui Po Park Swimming Pool,22.33113839,114.15499722,821344.0,834014.2000000001,SWIMMING POOLS,SHAM SHUI PO,"733 Lai Chi Kok Road, Sham Shui Po"
+Lei Cheng Uk Swimming Pool,22.33882331,114.16212313,822194.9,834748.4,SWIMMING POOLS,SHAM SHUI PO,"25 Kwong Lee Road, Sham Shui Po"
+Lai Chi Kok Park Swimming Pool,22.34032545,114.1372749,822361.7000000001,832188.7000000001,SWIMMING POOLS,SHAM SHUI PO,"1 Lai Wan Road, Lai Chi Kok"
+Island East Swimming Pool,22.2847541,114.2222929,816208.2000000001,840948.6,SWIMMING POOLS,EASTERN,"52 Lei King Road, Sai Wan Ho"
+Chai Wan Swimming Pool,22.26450345,114.24625267,813966.7000000001,843418.8,SWIMMING POOLS,EASTERN,"345 San Ha Street, Chai Wan"
+Wan Chai Swimming Pool,22.28121414,114.17688502,815815.5,836269.1,SWIMMING POOLS,WAN CHAI,"27 Harbour Road, Wan Chai"
+Sun Yat Sen Memorial Park Swimming Pool,22.28998144,114.14435355,816786.7000000001,832916.7000000001,SWIMMING POOLS,CENTRAL AND WESTERN,"16 Eastern Street North, Sai Ying Pun, Hong Kong."
+Kennedy Town Swimming Pool,22.28575468,114.13131283,816319.0,831572.7000000001,SWIMMING POOLS,CENTRAL AND WESTERN,"2 Sai Cheung Street North, Kennedy Town"
+Pao Yue Kong Swimming Pool,22.24575485,114.16525073,811889.0,835069.8,SWIMMING POOLS,SOUTHERN,"2 Shum Wan Road, Wong Chuk Hang"
