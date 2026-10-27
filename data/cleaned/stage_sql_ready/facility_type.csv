@@ -1,0 +1,9 @@
+type_id,type_code,type_name
+1,badminton_courts,Badminton Courts
+2,basketball_courts,Basketball Courts
+3,country_parks,Country Parks
+4,fitness_rooms,Fitness Rooms
+5,parks_zoos_and_gardens,"Parks, Zoos and Gardens"
+6,sports_grounds,Sports Grounds
+7,swimming_pools,Swimming Pools
+8,tennis_courts,Tennis Courts
