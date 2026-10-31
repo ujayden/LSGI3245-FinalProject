@@ -1,221 +1,115 @@
-pgsql
-CREATE DATABASE lsgi3245_fp;
-\c lsgi3245_fp
-CREATE EXTENSION IF NOT EXISTS postgis;
+# Initial database setup for LSGI3245-FinalProject
 
+Builds the `lsgi3245_fp` database (PostgreSQL 17 + PostGIS) from the HKDistrict18
+shapefile and the cleaned CSV extracts.
 
-CMD.exe 
+## 1. Prerequisites
+
+| Item | Value |
+| --- | --- |
+| PostgreSQL | 17, its `bin` directory added to `PATH` (supplies `psql` and `shp2pgsql`) |
+| Extension | PostGIS 3.x |
+| Spatial reference | district polygons in `EPSG:2326` (HK1980 Grid); source shapefile in `EPSG:4326` |
+| Working directory | this folder (`initialize_database\`) — required. |
+
+```bat
+cd initialize_database
 set "PATH=C:\Program Files\PostgreSQL\17\bin;%PATH%"
-shp2pgsql -s 4326:2326 -I -g geometry_shape ".\Hk18shp\HkDistrict18.shp" hk_district > district_import.sql
-psql -h localhost -U postgres -d lsgi3245_fp -v ON_ERROR_STOP=1 -f .\district_import.sql
-
-pgsql
-CREATE TABLE hk_district_before_fix AS
-SELECT * FROM hk_district;
-
-BEGIN;
-
-UPDATE hk_district
-SET geometry_shape =
-    ST_Multi(
-        ST_CollectionExtract(
-            ST_MakeValid(geometry_shape),
-            3
-        )
-    )
-WHERE NOT ST_IsValid(geometry_shape);
-
-COMMIT;
 ```
 
-The repair corrects the source SRID, extracts polygon components, fixes
-invalid geometries, converts them to `MULTIPOLYGON`, and transforms them to
-EPSG:2326. Drop `hk_district_before_fix` after verifying the result.
+Inputs:
 
-pgsql
-BEGIN;
+| File | Purpose | Rows |
+| --- | --- | --- |
+| `HK18shp\HKDistrict18.shp` (plus `.dbf`, `.shx`, `.prj`, `.cpg`) | district polygons, WGS84 per `.prj`, UTF-8 | 18 |
+| `sql_ready_csv\hk_district.csv` | district code, area, centroid | 18 |
+| `sql_ready_csv\facility_type.csv` | facility type lookup | 8 |
+| `sql_ready_csv\facility.csv` | facilities with EPSG:2326 and EPSG:4326 coordinates | 774 |
+| `sql_ready_csv\district_population.csv` | population totals | 18 |
+| `sql_ready_csv\population_age.csv` | five age bands per district | 90 |
+| `sql_ready_csv\working_income.csv` | seven income bands per district | 126 |
 
-ALTER TABLE hk_district
-    RENAME COLUMN id TO district_id;
+## 2. Create the database and enable PostGIS
 
-ALTER TABLE hk_district
-    ALTER COLUMN district_id TYPE integer
-    USING district_id::integer;
+`CREATE DATABASE` cannot run inside a transaction block, so issue it on its own.
 
-ALTER TABLE hk_district
-    RENAME COLUMN ename TO district_name;
+```bat
+psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 ^
+     -c "CREATE DATABASE lsgi3245_fp;"
 
-ALTER TABLE hk_district
-    DROP CONSTRAINT hk_district_pkey;
+psql -h localhost -U postgres -d lsgi3245_fp -v ON_ERROR_STOP=1 ^
+     -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+```
 
-ALTER TABLE hk_district
-    ADD CONSTRAINT hk_district_pkey PRIMARY KEY (district_id);
+## 3. Import the district polygons with `shp2pgsql`
 
-COMMIT;
+`-s 4326:2326` declares the source SRID (matching `HKDistrict18.prj` = WGS84) and
+reprojects to HK1980 Grid during import; `-I` creates a GiST index; `-g geometry_shape`
+names the geometry column used by every later step. The shapefile contains
+degenerate zero-area rings (4-vertex slivers up to ~3 m across, first vertex repeated
+last) in five districts — SAI KUNG, NORTH, TUEN MUN, SOUTHERN and ISLANDS — which make
+`ST_IsValid` fail; `schema.sql` collapses them before adding the validity constraint.
 
-ALTER TABLE hk_district
-    DROP COLUMN gid,
-    DROP COLUMN objectid,
-    DROP COLUMN cname,
-    DROP COLUMN cname_s,
-    DROP COLUMN shape_leng,
-    DROP COLUMN shape_area;
+```bat
+shp2pgsql -s 4326:2326 -I -g geometry_shape ^
+    ".\HK18shp\HKDistrict18.shp" district > district_import.sql
 
-ALTER TABLE hk_district
-    ADD COLUMN district_code text,
-    ADD COLUMN district_area double precision,
-    ADD COLUMN centroid geometry(Point, 2326);
+psql -h localhost -U postgres -d lsgi3245_fp -v ON_ERROR_STOP=1 -f .\district_import.sql
+```
 
-CREATE TEMP TABLE district_csv (
-    district_id integer PRIMARY KEY,
-    district_code text,
-    district_name text,
-    district_area double precision,
-    centroid text
-);
+## 4. Build the attribute schema and load the CSVs
 
+[schema.sql](./schema.sql) is the consolidated version of the remaining steps. Inside a
+single `BEGIN … COMMIT` it:
 
-\copy district_csv FROM 'sql_ready_csv/hk_district.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+- renames and retypes the imported columns (`id` → `district_id`, `ename` → `district_name`);
+- drops the leftover shapefile columns (`gid`, `objectid`, `cname`, `cname_s`, `shape_leng`, `shape_area`);
+- adds `district_code`, `district_area` and `centroid`, repairs the invalid imported polygons, then applies `NOT NULL`, CHECK constraints and the GiST index;
+- creates `facility_type`, `facility`, `district_population`, `population_age` and `working_income`;
+- loads every CSV, then creates the `district_spatial_summary`, `facility_coordinates` and `facility_details` views.
 
-UPDATE hk_district AS d
-SET
-    district_code = c.district_code,
-    district_name = c.district_name,
-    district_area = c.district_area,
-    centroid = ST_GeomFromText(NULLIF(c.centroid, ''), 2326)
-FROM district_csv AS c
-WHERE d.district_id = c.district_id;
+```bat
+psql -h localhost -U postgres -d lsgi3245_fp -v ON_ERROR_STOP=1 -f .\schema.sql
+```
 
-CREATE TABLE facility_type (
-    type_id integer PRIMARY KEY,
-    type_code text NOT NULL UNIQUE,
-    type_name text NOT NULL,
+Load order is FK-safe: `district` → `facility_type` → `facility` →
+`district_population` → `population_age` → `working_income`. `facility.csv` is staged in
+the temporary table `facility_csv` and inserted with
+`ST_GeomFromText(coordinate_hk80, 2326)` and `ST_GeomFromText(coordinate_wgs84, 4326)`.
+Both coordinate systems come straight from the CSV and are never recalculated, and
+`unit_count` may be empty.
 
-    CONSTRAINT facility_type_id_positive
-        CHECK (type_id > 0),
+## 5. Verify
 
-    CONSTRAINT facility_type_code_format
-        CHECK (type_code ~ '^[a-z][a-z0-9_]*$'),
+```sql
+SELECT 'district' AS tbl, count(*) FROM district
+UNION ALL SELECT 'facility_type', count(*) FROM facility_type
+UNION ALL SELECT 'facility', count(*) FROM facility
+UNION ALL SELECT 'district_population', count(*) FROM district_population
+UNION ALL SELECT 'population_age', count(*) FROM population_age
+UNION ALL SELECT 'working_income', count(*) FROM working_income;
+-- 18 | 8 | 774 | 18 | 90 | 126
+```
 
-    CONSTRAINT facility_type_name_not_blank
-        CHECK (btrim(type_name) <> '')
-);
+```sql
+-- every district must have population, age and income rows
+SELECT d.district_id
+FROM district AS d
+LEFT JOIN district_population AS p USING (district_id)
+LEFT JOIN population_age AS a USING (district_id)
+LEFT JOIN working_income AS w USING (district_id)
+WHERE p.district_id IS NULL
+   OR a.district_id IS NULL
+   OR w.district_id IS NULL;
+-- expect 0 rows
 
-\copy facility_type (type_id, type_code, type_name) FROM 'sql_ready_csv/facility_type.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+-- spatial sanity
+SELECT postgis_full_version();
+SELECT * FROM district_spatial_summary ORDER BY district_id LIMIT 3;
+SELECT * FROM facility_coordinates LIMIT 5;
 
-CREATE TABLE facility (
-    facility_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    facility_name text NOT NULL,
-    type_id integer NOT NULL
-        REFERENCES facility_type(type_id) ON DELETE RESTRICT,
-    district_id integer NOT NULL
-        REFERENCES hk_district(district_id) ON DELETE RESTRICT,
-    address text,
-    coordinate_hk80 geometry(Point, 2326) NOT NULL,
-    unit_count integer,
-
-    CONSTRAINT facility_name_not_blank
-        CHECK (btrim(facility_name) <> ''),
-    CONSTRAINT facility_unit_count_nonnegative
-        CHECK (unit_count >= 0),
-    CONSTRAINT facility_coordinate_not_empty
-        CHECK (NOT ST_IsEmpty(coordinate_hk80))
-);
-
-CREATE INDEX facility_type_idx ON facility(type_id);
-CREATE INDEX facility_district_idx ON facility(district_id);
-CREATE INDEX facility_geom_gix
-    ON facility USING gist(coordinate_hk80);
-
-
-CREATE TABLE district_population (
-    district_id integer PRIMARY KEY
-        REFERENCES hk_district(district_id) ON DELETE RESTRICT,
-    total_population integer NOT NULL,
-    male_population integer NOT NULL,
-    female_population integer NOT NULL,
-
-    CONSTRAINT total_population_nonnegative
-        CHECK (total_population >= 0),
-    CONSTRAINT male_population_nonnegative
-        CHECK (male_population >= 0),
-    CONSTRAINT female_population_nonnegative
-        CHECK (female_population >= 0)
-);
-
-
-CREATE TABLE population_age (
-    district_id integer NOT NULL
-        REFERENCES hk_district(district_id) ON DELETE RESTRICT,
-    age_band text NOT NULL,
-    population integer NOT NULL,
-
-    PRIMARY KEY (district_id, age_band),
-
-    CONSTRAINT age_band_allowed
-        CHECK (age_band IN ('<15', '15-24', '25-44', '45-64', '65+')),
-    CONSTRAINT age_population_nonnegative
-        CHECK (population >= 0)
-);
-
-
-CREATE TABLE working_income (
-    district_id integer NOT NULL
-        REFERENCES hk_district(district_id) ON DELETE RESTRICT,
-    income_band text NOT NULL,
-    worker_count integer NOT NULL,
-
-    PRIMARY KEY (district_id, income_band),
-
-    CONSTRAINT income_band_allowed
-        CHECK (income_band IN (
-            'income_under_6000',
-            'income_6000_9999',
-            'income_10000_19999',
-            'income_20000_29999',
-            'income_30000_39999',
-            'income_40000_59999',
-            'income_60000_and_over'
-        )),
-    CONSTRAINT worker_count_nonnegative
-        CHECK (worker_count >= 0)
-);
-
-\copy district_population (district_id, total_population, male_population, female_population) FROM 'sql_ready_csv/district_population.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
-
-\copy population_age (district_id, age_band, population) FROM 'sql_ready_csv/population_age.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
-
-\copy working_income (district_id, income_band, worker_count) FROM 'sql_ready_csv/working_income.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
-
-CREATE TEMP TABLE facility_csv (
-    facility_name text,
-    type_id integer,
-    district_id integer,
-    address text,
-    coordinate_hk80 text,
-    unit_count numeric,
-    coordinate_wgs84 text,
-    latitude double precision,
-    longitude double precision,
-
-    CHECK (unit_count = trunc(unit_count))
-);
-
-\copy facility_csv FROM 'sql_ready_csv/facility.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
-
-INSERT INTO facility (
-    facility_name,
-    type_id,
-    district_id,
-    address,
-    coordinate_hk80,
-    unit_count
-)
-SELECT
-    facility_name,
-    type_id,
-    district_id,
-    address,
-    ST_GeomFromText(coordinate_hk80, 2326),
-    unit_count::integer
-FROM facility_csv;
+-- stored area should agree with the geometry area
+SELECT district_code, stored_area_km2, calculated_area_km2
+FROM district_spatial_summary
+WHERE abs(stored_area_km2 - calculated_area_km2) > 0.01 * stored_area_km2;
+```

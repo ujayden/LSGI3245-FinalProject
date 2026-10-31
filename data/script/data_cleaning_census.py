@@ -1,9 +1,6 @@
 import pandas as pd
 import os
 
-# District name normalization / canonical names / code mapping all live in
-# data_cleaning.py, so there is a single source of truth across the pipeline.
-# data_cleaning imports this module lazily, so there is no import cycle.
 import data_cleaning as dc
 
 # CONFIG
@@ -91,9 +88,6 @@ CENSUS_DROP_COLS = [
 # Whitelist of the census columns to keep, mapped to meaningful names.
 # Dict order defines the output column order (see data_cleaning.py:rename_columns).
 CENSUS_KEEP_COLS_MAP = {
-    # `district_id` and `district_code` are derived from `dc_eng` afterwards
-    # (see attach_district_keys), so the shapefile stays the single source of
-    # ids and the code slugs are defined in one place.
     'dc_eng': 'district',
     # district_population
     't_pop': 'total_population',

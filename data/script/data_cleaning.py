@@ -30,10 +30,6 @@ NEAREST_DISTRICT_MAX_DISTANCE_M = 100
 #   2. Website columns (NSEARCH06_* / WebsiteEN+WebsiteTC)
 #   3. Contact information columns (NSEARCH03_* / NSEARCH04_* / NSEARCH05_*)
 #   4. Duplicated geo information (Geometry_*) - It AVOID confusion and mismatch when someone pick WRONG coloum.
-# Note: latitude / longitude is WGS84, northing / easting is HK1980 Grid System.
-# The `district` column is NOT taken from the source CSVs: it is recalculated
-# from the coordinates against HKDistrict18 (see assign_district).
-# `unit_count` is the generic name for a facility's number of units (courts).
 KEEP_COLS_MAP = {
     "badminton_courts.csv": {
         #"DATASET_EN": "dataset", It is broken. Discard.
@@ -548,20 +544,14 @@ def save_all_df(dataframes):
 
 
 # Column order of the SQL-ready `facility` table (see sql/schema.sql).
-# facility_id is omitted: PostgreSQL generates it from the IDENTITY column.
-# coordinate_wgs84 / latitude / longitude are extra helper columns for
-# inspection only: the schema derives them in the facility_coordinates view,
-# so they are not imported.
 FACILITY_TABLE_COLUMNS = [
     'facility_name',
     'type_id',
     'district_id',
     'address',
     'coordinate_hk80',
-    'unit_count',
     'coordinate_wgs84',
-    'latitude',
-    'longitude',
+    'unit_count',
 ]
 
 
@@ -638,11 +628,11 @@ def build_facility_table(dataframes):
       - address is empty when the source dataset has no address.
       - coordinate_hk80 is the HK1980 Grid (EPSG:2326) point in WKT,
         built from the easting / northing columns.
-      - unit_count is empty when the source dataset has no unit count.
       - coordinate_wgs84 is the WGS84 (EPSG:4326) point in WKT, in
         longitude latitude order, derived from coordinate_hk80.
-      - latitude / longitude are the plain WGS84 numbers of that point,
-        included as helper columns (the schema derives them in a view).
+      - unit_count is empty when the source dataset has no unit count.
+        Latitude / longitude are not carried into this table: the location is
+        stored as coordinate_hk80 / coordinate_wgs84 only.
 
     dataframes: mapping of dataset names to pandas.DataFrame
     returns: pandas.DataFrame
@@ -671,16 +661,14 @@ def build_facility_table(dataframes):
             pd.NA if pd.isna(e) or pd.isna(n) else f'POINT({e} {n})'
             for e, n in zip(easting, northing)
         ]
-        if 'unit_count' in df.columns:
-            table['unit_count'] = pd.array(df['unit_count'], dtype='Int64')
-        else:
-            table['unit_count'] = empty_ids
         table['coordinate_wgs84'] = [
             pd.NA if pd.isna(lat) or pd.isna(lon) else f'POINT({lon} {lat})'
             for lat, lon in zip(latitude, longitude)
         ]
-        table['latitude'] = latitude
-        table['longitude'] = longitude
+        if 'unit_count' in df.columns:
+            table['unit_count'] = pd.array(df['unit_count'], dtype='Int64')
+        else:
+            table['unit_count'] = empty_ids
         frames.append(table)
 
     facility_df = pd.concat(frames, ignore_index=True)

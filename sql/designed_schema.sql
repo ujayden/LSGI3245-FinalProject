@@ -22,12 +22,12 @@ CREATE TABLE facility_type (
         CHECK (btrim(type_name) <> '')
 );
 
--- hk_district
+-- district
 -- district_id is supplied by hk_district.csv (1..18, the HKDistrict18 feature
 -- ID), so it is an ordinary integer PK rather than an IDENTITY column.
 -- district_area (km2) and centroid are stored values calculated from the
 -- EPSG:2326 geometry at import time.
-CREATE TABLE hk_district (
+CREATE TABLE district (
     district_id integer PRIMARY KEY,
 
     district_code text NOT NULL UNIQUE,
@@ -40,7 +40,7 @@ CREATE TABLE hk_district (
 
     centroid geometry(Point, 2326),
 
-    CONSTRAINT hk_district_id_positive
+    CONSTRAINT district_id_positive
         CHECK (district_id > 0),
 
     CONSTRAINT district_code_not_blank
@@ -65,13 +65,13 @@ CREATE TABLE hk_district (
         CHECK (centroid IS NULL OR NOT ST_IsEmpty(centroid))
 );
 
-CREATE INDEX hk_district_geom_gix
-    ON hk_district USING gist (geometry_shape);
+CREATE INDEX district_geom_gix
+    ON district USING gist (geometry_shape);
 
 -- facility
 -- facility_id is NOT in facility.csv: it stays an IDENTITY column and is
--- generated on import. facility.csv also carries latitude / longitude helper
--- columns that are derived here by the facility_coordinates view instead.
+-- generated on import. facility.csv supplies both coordinate systems, so
+-- coordinate_hk80 and coordinate_wgs84 are copied as-is and never recalculated.
 -- The source_name / source_record_id provenance columns were removed: the
 -- cleaned data set does not provide them.
 CREATE TABLE facility (
@@ -84,12 +84,14 @@ CREATE TABLE facility (
         ON DELETE RESTRICT,
 
     district_id integer NOT NULL
-        REFERENCES hk_district (district_id)
+        REFERENCES district (district_id)
         ON DELETE RESTRICT,
 
     address text,
 
     coordinate_hk80 geometry(Point, 2326) NOT NULL,
+
+    coordinate_wgs84 geometry(Point, 4326) NOT NULL,
 
     unit_count integer,
 
@@ -100,7 +102,10 @@ CREATE TABLE facility (
         CHECK (unit_count >= 0),
 
     CONSTRAINT facility_coordinate_not_empty
-        CHECK (NOT ST_IsEmpty(coordinate_hk80))
+        CHECK (NOT ST_IsEmpty(coordinate_hk80)),
+
+    CONSTRAINT facility_coordinate_wgs84_not_empty
+        CHECK (NOT ST_IsEmpty(coordinate_wgs84))
 );
 
 CREATE INDEX facility_type_idx
@@ -119,7 +124,7 @@ CREATE INDEX facility_geom_gix
 -- All three counts are NOT NULL in the data set.
 CREATE TABLE district_population (
     district_id integer PRIMARY KEY
-        REFERENCES hk_district (district_id)
+        REFERENCES district (district_id)
         ON DELETE RESTRICT,
 
     total_population integer NOT NULL,
@@ -141,7 +146,7 @@ CREATE TABLE district_population (
 -- The age_band lookup table is dropped: the data already uses these 5 labels.
 CREATE TABLE population_age (
     district_id integer NOT NULL
-        REFERENCES hk_district (district_id)
+        REFERENCES district (district_id)
         ON DELETE RESTRICT,
 
     age_band text NOT NULL,
@@ -164,7 +169,7 @@ CREATE TABLE population_age (
 -- excluding foreign domestic helpers and unpaid family workers.
 CREATE TABLE working_income (
     district_id integer NOT NULL
-        REFERENCES hk_district (district_id)
+        REFERENCES district (district_id)
         ON DELETE RESTRICT,
 
     income_band text NOT NULL,
@@ -191,7 +196,7 @@ CREATE TABLE working_income (
 );
 
 -- Views
--- district_area / centroid are stored columns on hk_district, so the summary
+-- district_area / centroid are stored columns on district, so the summary
 -- view reports the stored values next to the recalculated ones.
 CREATE VIEW district_spatial_summary AS
 SELECT
@@ -209,9 +214,10 @@ SELECT
     ST_Centroid(geometry_shape) AS calculated_centroid_hk80,
 
     ST_PointOnSurface(geometry_shape) AS label_point_hk80
-FROM hk_district;
+FROM district;
 
--- WGS84 is derived from coordinate_hk80, not stored a second time.
+-- Both coordinate systems are stored on facility, so the view only unpacks
+-- them; nothing is reprojected here.
 CREATE VIEW facility_coordinates AS
 SELECT
     facility_id,
@@ -220,11 +226,10 @@ SELECT
     ST_X(coordinate_hk80) AS easting,
     ST_Y(coordinate_hk80) AS northing,
 
-    ST_Transform(coordinate_hk80, 4326)::geometry(Point, 4326)
-        AS geom_wgs84,
+    coordinate_wgs84 AS geom_wgs84,
 
-    ST_X(ST_Transform(coordinate_hk80, 4326)) AS longitude,
-    ST_Y(ST_Transform(coordinate_hk80, 4326)) AS latitude
+    ST_X(coordinate_wgs84) AS longitude,
+    ST_Y(coordinate_wgs84) AS latitude
 FROM facility;
 
 CREATE VIEW facility_details AS
@@ -237,11 +242,12 @@ SELECT
     d.district_name,
     f.address,
     f.unit_count,
-    f.coordinate_hk80
+    f.coordinate_hk80,
+    f.coordinate_wgs84
 FROM facility AS f
 JOIN facility_type AS t
     ON t.type_id = f.type_id
-JOIN hk_district AS d
+JOIN district AS d
     ON d.district_id = f.district_id;
 
 COMMIT;
