@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict sR3zJ5lkiSJqHpW5Oh7bul807dkeryrRxPDihzBx24kJrfwDhbR4h7mHS9I8x3j
+\restrict Fp6CB6IVqUUw3iElfIxbOHAP4XtizAIIDCHSCOaLi2GWtEdIVISh7QWrht6tM94
 
 -- Dumped from database version 17.10
 -- Dumped by pg_dump version 17.10
@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
@@ -38,7 +38,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: district; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: district; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.district (
@@ -59,10 +59,8 @@ CREATE TABLE public.district (
 );
 
 
-ALTER TABLE public.district OWNER TO "uncle-jayden";
-
 --
--- Name: district_population; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: district_population; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.district_population (
@@ -76,10 +74,8 @@ CREATE TABLE public.district_population (
 );
 
 
-ALTER TABLE public.district_population OWNER TO "uncle-jayden";
-
 --
--- Name: district_spatial_summary; Type: VIEW; Schema: public; Owner: uncle-jayden
+-- Name: district_spatial_summary; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.district_spatial_summary AS
@@ -95,10 +91,8 @@ CREATE VIEW public.district_spatial_summary AS
    FROM public.district;
 
 
-ALTER VIEW public.district_spatial_summary OWNER TO "uncle-jayden";
-
 --
--- Name: facility; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: facility; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.facility (
@@ -117,10 +111,8 @@ CREATE TABLE public.facility (
 );
 
 
-ALTER TABLE public.facility OWNER TO "uncle-jayden";
-
 --
--- Name: facility_coordinates; Type: VIEW; Schema: public; Owner: uncle-jayden
+-- Name: facility_coordinates; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.facility_coordinates AS
@@ -134,10 +126,8 @@ CREATE VIEW public.facility_coordinates AS
    FROM public.facility;
 
 
-ALTER VIEW public.facility_coordinates OWNER TO "uncle-jayden";
-
 --
--- Name: facility_type; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: facility_type; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.facility_type (
@@ -150,10 +140,8 @@ CREATE TABLE public.facility_type (
 );
 
 
-ALTER TABLE public.facility_type OWNER TO "uncle-jayden";
-
 --
--- Name: facility_details; Type: VIEW; Schema: public; Owner: uncle-jayden
+-- Name: facility_details; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.facility_details AS
@@ -172,10 +160,8 @@ CREATE VIEW public.facility_details AS
      JOIN public.district d ON ((d.district_id = f.district_id)));
 
 
-ALTER VIEW public.facility_details OWNER TO "uncle-jayden";
-
 --
--- Name: facility_facility_id_seq; Type: SEQUENCE; Schema: public; Owner: uncle-jayden
+-- Name: facility_facility_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 ALTER TABLE public.facility ALTER COLUMN facility_id ADD GENERATED ALWAYS AS IDENTITY (
@@ -189,7 +175,7 @@ ALTER TABLE public.facility ALTER COLUMN facility_id ADD GENERATED ALWAYS AS IDE
 
 
 --
--- Name: population_age; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: population_age; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.population_age (
@@ -201,10 +187,8 @@ CREATE TABLE public.population_age (
 );
 
 
-ALTER TABLE public.population_age OWNER TO "uncle-jayden";
-
 --
--- Name: working_income; Type: TABLE; Schema: public; Owner: uncle-jayden
+-- Name: working_income; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.working_income (
@@ -216,10 +200,8 @@ CREATE TABLE public.working_income (
 );
 
 
-ALTER TABLE public.working_income OWNER TO "uncle-jayden";
-
 --
--- Data for Name: district; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: district; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.district (district_id, district_name, geometry_shape, district_code, district_area, centroid) FROM stdin;
@@ -245,7 +227,7 @@ COPY public.district (district_id, district_name, geometry_shape, district_code,
 
 
 --
--- Data for Name: district_population; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: district_population; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.district_population (district_id, total_population, male_population, female_population) FROM stdin;
@@ -271,7 +253,7 @@ COPY public.district_population (district_id, total_population, male_population,
 
 
 --
--- Data for Name: facility; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: facility; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.facility (facility_id, facility_name, type_id, district_id, address, coordinate_hk80, coordinate_wgs84, unit_count) FROM stdin;
@@ -1053,7 +1035,7 @@ COPY public.facility (facility_id, facility_name, type_id, district_id, address,
 
 
 --
--- Data for Name: facility_type; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: facility_type; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.facility_type (type_id, type_code, type_name) FROM stdin;
@@ -1069,7 +1051,7 @@ COPY public.facility_type (type_id, type_code, type_name) FROM stdin;
 
 
 --
--- Data for Name: population_age; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: population_age; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.population_age (district_id, age_band, population) FROM stdin;
@@ -1167,7 +1149,7 @@ COPY public.population_age (district_id, age_band, population) FROM stdin;
 
 
 --
--- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
@@ -1175,7 +1157,7 @@ COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM
 
 
 --
--- Data for Name: working_income; Type: TABLE DATA; Schema: public; Owner: uncle-jayden
+-- Data for Name: working_income; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.working_income (district_id, income_band, worker_count) FROM stdin;
@@ -1309,14 +1291,14 @@ COPY public.working_income (district_id, income_band, worker_count) FROM stdin;
 
 
 --
--- Name: facility_facility_id_seq; Type: SEQUENCE SET; Schema: public; Owner: uncle-jayden
+-- Name: facility_facility_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.facility_facility_id_seq', 774, true);
 
 
 --
--- Name: district district_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: district district_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.district
@@ -1324,7 +1306,7 @@ ALTER TABLE ONLY public.district
 
 
 --
--- Name: district_population district_population_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: district_population district_population_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.district_population
@@ -1332,7 +1314,7 @@ ALTER TABLE ONLY public.district_population
 
 
 --
--- Name: facility facility_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: facility facility_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.facility
@@ -1340,7 +1322,7 @@ ALTER TABLE ONLY public.facility
 
 
 --
--- Name: facility_type facility_type_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: facility_type facility_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.facility_type
@@ -1348,7 +1330,7 @@ ALTER TABLE ONLY public.facility_type
 
 
 --
--- Name: facility_type facility_type_type_code_key; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: facility_type facility_type_type_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.facility_type
@@ -1356,7 +1338,7 @@ ALTER TABLE ONLY public.facility_type
 
 
 --
--- Name: population_age population_age_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: population_age population_age_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.population_age
@@ -1364,7 +1346,7 @@ ALTER TABLE ONLY public.population_age
 
 
 --
--- Name: working_income working_income_pkey; Type: CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: working_income working_income_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.working_income
@@ -1372,42 +1354,42 @@ ALTER TABLE ONLY public.working_income
 
 
 --
--- Name: district_geom_gix; Type: INDEX; Schema: public; Owner: uncle-jayden
+-- Name: district_geom_gix; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX district_geom_gix ON public.district USING gist (geometry_shape);
 
 
 --
--- Name: district_geometry_shape_idx; Type: INDEX; Schema: public; Owner: uncle-jayden
+-- Name: district_geometry_shape_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX district_geometry_shape_idx ON public.district USING gist (geometry_shape);
 
 
 --
--- Name: facility_district_idx; Type: INDEX; Schema: public; Owner: uncle-jayden
+-- Name: facility_district_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX facility_district_idx ON public.facility USING btree (district_id);
 
 
 --
--- Name: facility_geom_gix; Type: INDEX; Schema: public; Owner: uncle-jayden
+-- Name: facility_geom_gix; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX facility_geom_gix ON public.facility USING gist (coordinate_hk80);
 
 
 --
--- Name: facility_type_idx; Type: INDEX; Schema: public; Owner: uncle-jayden
+-- Name: facility_type_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX facility_type_idx ON public.facility USING btree (type_id);
 
 
 --
--- Name: district_population district_population_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: district_population district_population_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.district_population
@@ -1415,7 +1397,7 @@ ALTER TABLE ONLY public.district_population
 
 
 --
--- Name: facility facility_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: facility facility_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.facility
@@ -1423,7 +1405,7 @@ ALTER TABLE ONLY public.facility
 
 
 --
--- Name: facility facility_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: facility facility_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.facility
@@ -1431,7 +1413,7 @@ ALTER TABLE ONLY public.facility
 
 
 --
--- Name: population_age population_age_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: population_age population_age_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.population_age
@@ -1439,7 +1421,7 @@ ALTER TABLE ONLY public.population_age
 
 
 --
--- Name: working_income working_income_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: uncle-jayden
+-- Name: working_income working_income_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.working_income
@@ -1447,113 +1429,8 @@ ALTER TABLE ONLY public.working_income
 
 
 --
--- Name: TABLE district; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.district TO lsgi3245;
-
-
---
--- Name: TABLE district_population; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.district_population TO lsgi3245;
-
-
---
--- Name: TABLE district_spatial_summary; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.district_spatial_summary TO lsgi3245;
-
-
---
--- Name: TABLE facility; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.facility TO lsgi3245;
-
-
---
--- Name: TABLE facility_coordinates; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.facility_coordinates TO lsgi3245;
-
-
---
--- Name: TABLE facility_type; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.facility_type TO lsgi3245;
-
-
---
--- Name: TABLE facility_details; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.facility_details TO lsgi3245;
-
-
---
--- Name: SEQUENCE facility_facility_id_seq; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON SEQUENCE public.facility_facility_id_seq TO lsgi3245;
-
-
---
--- Name: TABLE geography_columns; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.geography_columns TO lsgi3245;
-
-
---
--- Name: TABLE geometry_columns; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.geometry_columns TO lsgi3245;
-
-
---
--- Name: TABLE population_age; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.population_age TO lsgi3245;
-
-
---
--- Name: TABLE spatial_ref_sys; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.spatial_ref_sys TO lsgi3245;
-
-
---
--- Name: TABLE working_income; Type: ACL; Schema: public; Owner: uncle-jayden
---
-
-GRANT ALL ON TABLE public.working_income TO lsgi3245;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: uncle-jayden
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE "uncle-jayden" IN SCHEMA public GRANT ALL ON SEQUENCES TO lsgi3245;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: uncle-jayden
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE "uncle-jayden" IN SCHEMA public GRANT ALL ON TABLES TO lsgi3245;
-
-
---
 -- PostgreSQL database dump complete
 --
 
-\unrestrict sR3zJ5lkiSJqHpW5Oh7bul807dkeryrRxPDihzBx24kJrfwDhbR4h7mHS9I8x3j
+\unrestrict Fp6CB6IVqUUw3iElfIxbOHAP4XtizAIIDCHSCOaLi2GWtEdIVISh7QWrht6tM94
 
