@@ -398,6 +398,18 @@ def assign_district(df, dataframe_name):
                 f"Note: {dataframe_name}: {int(changed.sum())} district value(s) "
                 f"recalculated from coordinates"
             )
+            for index, row in df.loc[changed].iterrows():
+                facility_name = row.get('facility_name', f'row {index}')
+                details = (
+                    f"{facility_name}: {source_district.loc[index]} -> "
+                    f"{computed.loc[index]}"
+                )
+                if pd.notna(row.get('latitude')) and pd.notna(row.get('longitude')):
+                    details += (
+                        f" (coordinates: {row['latitude']}, "
+                        f"{row['longitude']})"
+                    )
+                print(f"  - {details}")
 
     df['district'] = computed
     warn_if_district_mismatch(df['district'], dataframe_name)

@@ -2,25 +2,25 @@ BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS postgis;
 
--- district is created by shp2pgsql from HKDistrict18.shp; realign its columns
+-- hk_admin is created by shp2pgsql from HKDistrict18.shp; realign its columns
 -- with the attribute schema.
-ALTER TABLE district
+ALTER TABLE hk_admin
     RENAME COLUMN id TO district_id;
 
-ALTER TABLE district
+ALTER TABLE hk_admin
     ALTER COLUMN district_id TYPE integer
     USING district_id::integer;
 
-ALTER TABLE district
+ALTER TABLE hk_admin
     RENAME COLUMN ename TO district_name;
 
-ALTER TABLE district
-    DROP CONSTRAINT district_pkey;
+ALTER TABLE hk_admin
+    DROP CONSTRAINT hk_admin_pkey;
 
-ALTER TABLE district
-    ADD CONSTRAINT district_pkey PRIMARY KEY (district_id);
+ALTER TABLE hk_admin
+    ADD CONSTRAINT hk_admin_pkey PRIMARY KEY (district_id);
 
-ALTER TABLE district
+ALTER TABLE hk_admin
     DROP COLUMN gid,
     DROP COLUMN objectid,
     DROP COLUMN cname,
@@ -28,12 +28,12 @@ ALTER TABLE district
     DROP COLUMN shape_leng,
     DROP COLUMN shape_area;
 
-ALTER TABLE district
+ALTER TABLE hk_admin
     ADD COLUMN district_code text,
     ADD COLUMN district_area double precision,
     ADD COLUMN centroid geometry(Point, 2326);
 
-CREATE TEMP TABLE district_csv (
+CREATE TEMP TABLE hk_admin_csv (
     district_id integer PRIMARY KEY,
     district_code text,
     district_name text,
@@ -41,18 +41,18 @@ CREATE TEMP TABLE district_csv (
     centroid text
 );
 
-\copy district_csv FROM 'sql_ready_csv/hk_district.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+\copy hk_admin_csv FROM 'sql_ready_csv/hk_district.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 
-UPDATE district AS d
+UPDATE hk_admin AS d
 SET
     district_code = c.district_code,
     district_name = c.district_name,
     district_area = c.district_area,
     centroid = ST_GeomFromText(NULLIF(c.centroid, ''), 2326)
-FROM district_csv AS c
+FROM hk_admin_csv AS c
 WHERE d.district_id = c.district_id;
 
-ALTER TABLE district
+ALTER TABLE hk_admin
     ALTER COLUMN district_code SET NOT NULL,
     ALTER COLUMN district_area SET NOT NULL;
 
@@ -62,7 +62,7 @@ ALTER TABLE district
 -- imported geometry, e.g. "Nested shells at or near point 808727.69 816806.97",
 -- which is ISLANDS ring 116 at 113.909626, 22.289948. Collapse them before the
 -- validity constraint below can be added.
-UPDATE district
+UPDATE hk_admin
 SET geometry_shape =
     ST_Multi(
         ST_CollectionExtract(
@@ -72,26 +72,26 @@ SET geometry_shape =
     )
 WHERE NOT ST_IsValid(geometry_shape);
 
-ALTER TABLE district
-    ADD CONSTRAINT district_id_positive
+ALTER TABLE hk_admin
+    ADD CONSTRAINT hk_admin_id_positive
         CHECK (district_id > 0),
-    ADD CONSTRAINT district_code_not_blank
+    ADD CONSTRAINT hk_admin_code_not_blank
         CHECK (btrim(district_code) <> ''),
-    ADD CONSTRAINT district_code_format
+    ADD CONSTRAINT hk_admin_code_format
         CHECK (district_code ~ '^[a-z][a-z0-9_]*$'),
-    ADD CONSTRAINT district_name_not_blank
+    ADD CONSTRAINT hk_admin_name_not_blank
         CHECK (btrim(district_name) <> ''),
-    ADD CONSTRAINT district_geom_not_empty
+    ADD CONSTRAINT hk_admin_geom_not_empty
         CHECK (NOT ST_IsEmpty(geometry_shape)),
-    ADD CONSTRAINT district_geom_valid
+    ADD CONSTRAINT hk_admin_geom_valid
         CHECK (ST_IsValid(geometry_shape)),
-    ADD CONSTRAINT district_area_nonnegative
+    ADD CONSTRAINT hk_admin_area_nonnegative
         CHECK (district_area >= 0),
-    ADD CONSTRAINT district_centroid_not_empty
+    ADD CONSTRAINT hk_admin_centroid_not_empty
         CHECK (centroid IS NULL OR NOT ST_IsEmpty(centroid));
 
-CREATE INDEX district_geom_gix
-    ON district USING gist (geometry_shape);
+CREATE INDEX hk_admin_geom_gix
+    ON hk_admin USING gist (geometry_shape);
 
 -- facility_type
 -- type_id is supplied by facility_type.csv (1..8, A-Z by type_code), so it is
@@ -131,7 +131,7 @@ CREATE TABLE facility (
         ON DELETE RESTRICT,
 
     district_id integer NOT NULL
-        REFERENCES district (district_id)
+        REFERENCES hk_admin (district_id)
         ON DELETE RESTRICT,
 
     address text,
@@ -164,14 +164,14 @@ CREATE INDEX facility_district_idx
 CREATE INDEX facility_geom_gix
     ON facility USING gist (coordinate_hk80);
 
--- district_population
--- One row per district. The cleaned data has no dataset_id / reference year,
--- so the statistical_dataset table and its FK are dropped; the snapshot's
--- source and year are documented externally.
+-- census
+-- One row per hk_admin area. The cleaned data has no dataset_id / reference
+-- year, so the statistical_dataset table and its FK are dropped; the
+-- snapshot's source and year are documented externally.
 -- All three counts are NOT NULL in the data set.
-CREATE TABLE district_population (
+CREATE TABLE census (
     district_id integer PRIMARY KEY
-        REFERENCES district (district_id)
+        REFERENCES hk_admin (district_id)
         ON DELETE RESTRICT,
 
     total_population integer NOT NULL,
@@ -188,14 +188,15 @@ CREATE TABLE district_population (
         CHECK (female_population >= 0)
 );
 
-    \copy district_population (district_id, total_population, male_population, female_population) FROM 'sql_ready_csv/district_population.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+-- The CSV keeps its original name; only the table is renamed.
+    \copy census (district_id, total_population, male_population, female_population) FROM 'sql_ready_csv/district_population.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 
 -- population_age
 -- district_id / age_band / population, with the age band label stored directly.
 -- The age_band lookup table is dropped: the data already uses these 5 labels.
 CREATE TABLE population_age (
     district_id integer NOT NULL
-        REFERENCES district (district_id)
+        REFERENCES hk_admin (district_id)
         ON DELETE RESTRICT,
 
     age_band text NOT NULL,
@@ -220,7 +221,7 @@ CREATE TABLE population_age (
 -- excluding foreign domestic helpers and unpaid family workers.
 CREATE TABLE working_income (
     district_id integer NOT NULL
-        REFERENCES district (district_id)
+        REFERENCES hk_admin (district_id)
         ON DELETE RESTRICT,
 
     income_band text NOT NULL,
@@ -282,7 +283,7 @@ SELECT
 FROM facility_csv;
 
 -- Views
--- district_area / centroid are stored columns on district, so the summary
+-- district_area / centroid are stored columns on hk_admin, so the summary
 -- view reports the stored values next to the recalculated ones.
 CREATE VIEW district_spatial_summary AS
 SELECT
@@ -300,7 +301,7 @@ SELECT
     ST_Centroid(geometry_shape) AS calculated_centroid_hk80,
 
     ST_PointOnSurface(geometry_shape) AS label_point_hk80
-FROM district;
+FROM hk_admin;
 
 -- Both coordinate systems are stored on facility, so the view only unpacks
 -- them; nothing is reprojected here.
@@ -333,7 +334,7 @@ SELECT
 FROM facility AS f
 JOIN facility_type AS t
     ON t.type_id = f.type_id
-JOIN district AS d
+JOIN hk_admin AS d
     ON d.district_id = f.district_id;
 
 COMMIT;

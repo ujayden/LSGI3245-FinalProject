@@ -2,9 +2,11 @@
 
 All geometry is stored in **EPSG:2326** (HK1980 Grid, metres) except `facility.coordinate_wgs84`, which is **EPSG:4326**. `district_area` is km² and `unit_count` may be `NULL`.
 
+> **Renamed by [`patch_v1.sql`](./patch_v1.sql):** the district table is now `hk_admin` (HK_Admin) and `district_population` is now `census`. Column names such as `district_id` are unchanged, so only the table names in `FROM` / `JOIN` change.
+
 ## 1. `district_id` → `district_code` → `district_name`
 
-`district_id` is the HKDistrict18 feature ID and is what the foreign keys use. Write queries against `district_code` instead of memorising IDs, and let a join translate it.
+`district_id` is the HKDistrict18 feature ID and is what the foreign keys use. Write queries against `district_code` instead of memorising IDs, and let a join translate it. The lookup table is `hk_admin` — the 18 HKDistrict18 administrative areas, formerly `district`.
 
 | `district_id` | `district_code` | `district_name` |
 | ---: | --- | --- |
@@ -46,13 +48,13 @@ All geometry is stored in **EPSG:2326** (HK1980 Grid, metres) except `facility.c
 
 ### `NATURAL JOIN`
 
-Each pair of related tables shares **exactly one** column name: `district`, `facility`, `district_population`, `population_age` and `working_income` share `district_id`, while `facility_type` and `facility` share `type_id`. Because of that, `NATURAL JOIN` needs no `ON` clause.
+Each pair of related tables shares **exactly one** column name: `hk_admin`, `facility`, `census`, `population_age` and `working_income` share `district_id`, while `facility_type` and `facility` share `type_id`. Because of that, `NATURAL JOIN` needs no `ON` clause.
 
 ```sql
 -- facilities in a district, selected by code
 SELECT facility_name, type_code
 FROM facility
-NATURAL JOIN district
+NATURAL JOIN hk_admin
 NATURAL JOIN facility_type
 WHERE district_code = 'sha_tin';
 ```
@@ -70,8 +72,8 @@ ORDER BY facility_count DESC;
 ```sql
 -- population and facility count per district
 SELECT district_code, total_population, count(facility_id) AS facility_count
-FROM district
-NATURAL JOIN district_population
+FROM hk_admin
+NATURAL JOIN census
 LEFT JOIN facility USING (district_id)
 GROUP BY district_code, total_population
 ORDER BY total_population DESC;
@@ -84,7 +86,7 @@ Natural joins are implicit: adding an identically named column later silently ch
 ```sql
 SELECT d.district_code, count(*) AS facility_count
 FROM facility AS f
-JOIN district AS d USING (district_id)
+JOIN hk_admin AS d USING (district_id)
 GROUP BY d.district_code
 ORDER BY facility_count DESC;
 ```
@@ -94,7 +96,7 @@ ORDER BY facility_count DESC;
 SELECT f.facility_name, t.type_name, d.district_name
 FROM facility AS f
 JOIN facility_type AS t ON t.type_id = f.type_id
-JOIN district      AS d ON d.district_id = f.district_id
+JOIN hk_admin      AS d ON d.district_id = f.district_id
 WHERE f.facility_name ILIKE '%sports centre%'
 LIMIT 10;
 ```
@@ -104,7 +106,7 @@ LIMIT 10;
 ```sql
 SELECT facility_name, unit_count
 FROM facility
-WHERE district_id = (SELECT district_id FROM district WHERE district_code = 'islands')
+WHERE district_id = (SELECT district_id FROM hk_admin WHERE district_code = 'islands')
   AND unit_count >= 4
 ORDER BY unit_count DESC;
 ```
@@ -117,7 +119,7 @@ ORDER BY unit_count DESC;
 -- age structure of two districts
 SELECT d.district_code, a.age_band, a.population
 FROM population_age AS a
-JOIN district AS d USING (district_id)
+JOIN hk_admin AS d USING (district_id)
 WHERE d.district_code IN ('kwun_tong', 'sha_tin')
 ORDER BY d.district_code, a.age_band;
 ```
@@ -132,7 +134,7 @@ SELECT d.district_code,
            2
        ) AS pct_high_income
 FROM working_income AS w
-JOIN district AS d USING (district_id)
+JOIN hk_admin AS d USING (district_id)
 GROUP BY d.district_code
 ORDER BY pct_high_income DESC NULLS LAST;
 ```
@@ -143,7 +145,7 @@ ORDER BY pct_high_income DESC NULLS LAST;
 -- facilities whose point falls inside a district polygon
 SELECT f.facility_name, f.coordinate_hk80
 FROM facility AS f
-JOIN district AS d USING (district_id)
+JOIN hk_admin AS d USING (district_id)
 WHERE d.district_code = 'yau_tsim_mong'
   AND ST_Contains(d.geometry_shape, f.coordinate_hk80);
 ```
@@ -152,7 +154,7 @@ WHERE d.district_code = 'yau_tsim_mong'
 -- metres from a HK1980 Grid point to each district centroid
 SELECT district_code,
        round(ST_Distance(centroid, ST_GeomFromText('POINT(836000 820000)', 2326))) AS metres
-FROM district
+FROM hk_admin
 ORDER BY metres
 LIMIT 5;
 ```
@@ -161,7 +163,7 @@ LIMIT 5;
 
 | View | One row per | Use it for |
 | --- | --- | --- |
-| `district_spatial_summary` | district | stored vs. recalculated area / centroid, label point |
+| `district_spatial_summary` | `hk_admin` area | stored vs. recalculated area / centroid, label point |
 | `facility_coordinates` | facility | easting / northing, WGS84 geometry, longitude / latitude |
 | `facility_details` | facility | facility plus `type_code`, `type_name`, `district_code`, `district_name` |
 
@@ -184,14 +186,14 @@ LIMIT 10;
 
 | Table | Rows | Description |
 | --- | ---: | --- |
-| `district` | 18 | District polygons (`geometry_shape`, EPSG:2326) with stored `district_area` (km²) and `centroid`. Key: `district_id`. |
+| `hk_admin` | 18 | HKDistrict18 administrative-area polygons (`geometry_shape`, EPSG:2326) with stored `district_area` (km²) and `centroid`. Key: `district_id`. |
 | `facility_type` | 8 | Category lookup: `type_id` → `type_code` → `type_name`. |
 | `facility` | 774 | One point per facility with both coordinate systems and an optional `unit_count`. Key: `facility_id`. |
-| `district_population` | 18 | Total, male and female population per district. Key: `district_id`. |
+| `census` | 18 | Total, male and female population per district, from the DC_21C census snapshot (still loaded from `district_population.csv`). Key: `district_id`. |
 | `population_age` | 90 | Five age bands per district. Key: (`district_id`, `age_band`). |
 | `working_income` | 126 | Seven income bands per district. Key: (`district_id`, `income_band`). |
 
-`district`:
+`hk_admin`:
 
 | Column | Type | Notes |
 | --- | --- | --- |
@@ -209,7 +211,7 @@ LIMIT 10;
 | `facility_id` | `integer` | PK, `GENERATED ALWAYS AS IDENTITY` |
 | `facility_name` | `text` | NOT NULL |
 | `type_id` | `integer` | FK → `facility_type`, `ON DELETE RESTRICT` |
-| `district_id` | `integer` | FK → `district`, `ON DELETE RESTRICT` |
+| `district_id` | `integer` | FK → `hk_admin`, `ON DELETE RESTRICT` |
 | `address` | `text` | may be `NULL` |
 | `coordinate_hk80` | `geometry(Point, 2326)` | NOT NULL, GiST indexed |
 | `coordinate_wgs84` | `geometry(Point, 4326)` | NOT NULL, loaded from the CSV |
@@ -217,17 +219,34 @@ LIMIT 10;
 
 Band values are constrained: `age_band` is one of `<15`, `15-24`, `25-44`, `45-64`, `65+`; `income_band` is one of `income_under_6000`, `income_6000_9999`, `income_10000_19999`, `income_20000_29999`, `income_30000_39999`, `income_40000_59999`, `income_60000_and_over`.
 
+### Renaming applied by `patch_v1.sql`
+
+[`patch_v1.sql`](./patch_v1.sql) renames the two tables on an instance built before the change; a fresh build from [`designed_schema.sql`](./designed_schema.sql) already uses the new names. Run it once with `psql … -v ON_ERROR_STOP=1 -f sql/patch_v1.sql`; it refuses a second run.
+
+| Object | Before | After |
+| --- | --- | --- |
+| table | `district` | `hk_admin` |
+| table | `district_population` | `census` |
+| index | `district_geom_gix` | `hk_admin_geom_gix` |
+| index | `district_geometry_shape_idx` | `hk_admin_geometry_shape_idx` |
+| primary key | `district_pkey` | `hk_admin_pkey` |
+| primary key | `district_population_pkey` | `census_pkey` |
+| foreign key | `district_population_district_id_fkey` | `census_district_id_fkey` |
+| checks | `district_*` | `hk_admin_*` |
+
+Column names, the three view names and the CSV file names do not change, so only table references in queries need editing. [`lsgi3245_backup.sql`](./lsgi3245_backup.sql) and `lsgi3245_backup.dump` still describe the pre-patch state — re-dump them after applying the patch.
+
 ### Entity-relationship diagram
 
 ```mermaid
 erDiagram
-    district ||--|| district_population : "has population"
-    district ||--o{ population_age : "has age bands"
-    district ||--o{ working_income : "has income bands"
-    district ||--o{ facility : "contains"
+    hk_admin ||--|| census : "has population"
+    hk_admin ||--o{ population_age : "has age bands"
+    hk_admin ||--o{ working_income : "has income bands"
+    hk_admin ||--o{ facility : "contains"
     facility_type ||--o{ facility : "classifies"
 
-    district {
+    hk_admin {
         integer district_id PK
         text district_code UK
         text district_name
@@ -246,42 +265,42 @@ erDiagram
         integer facility_id PK
         text facility_name
         integer type_id FK "-> facility_type"
-        integer district_id FK "-> district"
+        integer district_id FK "-> hk_admin"
         text address
         geometry coordinate_hk80
         geometry coordinate_wgs84
         integer unit_count
     }
 
-    district_population {
-        integer district_id PK "-> district"
+    census {
+        integer district_id PK "-> hk_admin"
         integer total_population
         integer male_population
         integer female_population
     }
 
     population_age {
-        integer district_id PK "-> district"
+        integer district_id PK "-> hk_admin"
         text age_band PK
         integer population
     }
 
     working_income {
-        integer district_id PK "-> district"
+        integer district_id PK "-> hk_admin"
         text income_band PK
         integer worker_count
     }
 ```
 
-The three views are read-only projections over these tables: `district_spatial_summary` (from `district`), `facility_coordinates` (from `facility`) and `facility_details` (`facility` + `facility_type` + `district`).
+The three views are read-only projections over these tables: `district_spatial_summary` (from `hk_admin`), `facility_coordinates` (from `facility`) and `facility_details` (`facility` + `facility_type` + `hk_admin`).
 
 ## 5. Quick check
 
 ```sql
-SELECT 'district' AS tbl, count(*) FROM district
+SELECT 'hk_admin' AS tbl, count(*) FROM hk_admin
 UNION ALL SELECT 'facility_type', count(*) FROM facility_type
 UNION ALL SELECT 'facility', count(*) FROM facility
-UNION ALL SELECT 'district_population', count(*) FROM district_population
+UNION ALL SELECT 'census', count(*) FROM census
 UNION ALL SELECT 'population_age', count(*) FROM population_age
 UNION ALL SELECT 'working_income', count(*) FROM working_income;
 -- 18 | 8 | 774 | 18 | 90 | 126
